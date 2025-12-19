@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>Boozeo</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<style>
+body {
+  margin: 0;
+  font-family: 'Segoe UI', Arial, sans-serif;
+  background: linear-gradient(135deg, #fff5e6, #ffe8cc);
+}
+
+header {
+  background: #ff4d4f;
+  color: white;
+  padding: 16px;
+  font-size: 26px;
+  font-weight: bold;
+  text-align: center;
+}
+
+.container {
+  max-width: 1000px;
+  margin: auto;
+  padding: 20px;
+}
+
+.section {
+  margin-top: 30px;
+}
+
+.section h2 {
+  margin-bottom: 10px;
+}
+
+.products {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+  gap: 15px;
+}
+
+.card {
+  background: white;
+  border-radius: 14px;
+  padding: 10px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  text-align: center;
+}
+
+.card img {
+  width: 100%;
+  height: 120px;
+  object-fit: contain;
+}
+
+.card button {
+  margin-top: 8px;
+  background: #ff4d4f;
+  border: none;
+  color: white;
+  padding: 8px;
+  border-radius: 20px;
+  cursor: pointer;
+}
+
+#cart {
+  background: white;
+  border-radius: 14px;
+  padding: 15px;
+  margin-top: 30px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+
+.cart-item {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 8px;
+}
+
+.remove {
+  color: red;
+  cursor: pointer;
+}
+</style>
+</head>
+
+<body>
+
+<header>🍺 Boozeo</header>
+
+<div class="container">
+
+<!-- CERVEZAS -->
+<div class="section">
+<h2>Cervezas</h2>
+<div class="products">
+
+<div class="card">
+<img src="https://upload.wikimedia.org/wikipedia/commons/5/57/Pilsener_Ecuador.png">
+<p>Pilsener</p>
+<p>$2.00</p>
+<button onclick="add('Pilsener',2)">Agregar</button>
+</div>
+
+<div class="card">
+<img src="https://upload.wikimedia.org/wikipedia/commons/7/7d/Corona_Extra_Bottle.png">
+<p>Corona</p>
+<p>$3.00</p>
+<button onclick="add('Corona',3)">Agregar</button>
+</div>
+
+<div class="card">
+<img src="https://upload.wikimedia.org/wikipedia/commons/2/2f/Heineken_Bottle.png">
+<p>Heineken</p>
+<p>$3.50</p>
+<button onclick="add('Heineken',3.5)">Agregar</button>
+</div>
+
+<div class="card">
+<img src="https://upload.wikimedia.org/wikipedia/commons/3/34/Sol_Beer.png">
+<p>Sol</p>
+<p>$3.00</p>
+<button onclick="add('Sol',3)">Agregar</button>
+</div>
+
+</div>
+</div>
+
+<!-- RON -->
+<div class="section">
+<h2>Ron</h2>
+<div class="products">
+
+<div class="card">
+<img src="https://upload.wikimedia.org/wikipedia/commons/5/5c/Ron_Abuelo.png">
+<p>Ron Abuelo</p>
+<p>$18.00</p>
+<button onclick="add('Ron Abuelo',18)">Agregar</button>
+</div>
+
+<div class="card">
+<img src="https://upload.wikimedia.org/wikipedia/commons/9/90/Ron_Medellin.png">
+<p>Ron Medellín</p>
+<p>$16.00</p>
+<button onclick="add('Ron Medellín',16)">Agregar</button>
+</div>
+
+<div class="card">
+<img src="https://upload.wikimedia.org/wikipedia/commons/e/e1/Punta_Cana_Rum.png">
+<p>Punta Cana</p>
+<p>$22.00</p>
+<button onclick="add('Punta Cana',22)">Agregar</button>
+</div>
+
+</div>
+</div>
+
+<!-- CARRITO -->
+<div id="cart">
+<h2>🛒 Carrito</h2>
+<div id="items"></div>
+<p><strong>Total: $<span id="total">0.00</span></strong></p>
+</div>
+
+</div>
+
+<script>
+let cart = [];
+let total = 0;
+
+function add(name, price) {
+  cart.push({name, price});
+  total += price;
+  render();
+}
+
+function removeItem(index) {
+  total -= cart[index].price;
+  cart.splice(index,1);
+  render();
+}
+
+function render() {
+  const items = document.getElementById("items");
+  items.innerHTML = "";
+  cart.forEach((i, index) => {
+    items.innerHTML += `
+      <div class="cart-item">
+        ${i.name} - $${i.price}
+        <span class="remove" onclick="removeItem(${index})">❌</span>
+      </div>
+    `;
+  });
+  document.getElementById("total").textContent = total.toFixed(2);
+}
+</script>
+
+</body>
+</html>
